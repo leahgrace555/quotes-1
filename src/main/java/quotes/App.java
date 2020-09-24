@@ -15,35 +15,25 @@ public class App {
         return "Hello world.";
     }
 
-    public static void main(String[] args) throws IOException {
-//        Gson gson = new Gson();
-//        TypeDTO[] myTypes = gson.fromJson(new FileReader("quotes.json"), TypeDTO[].class);
-//        System.out.println(gson.toJson(myTypes));
+    public static void main(String[] args) throws FileNotFoundException {
 
         try {
             Gson gson = new Gson();
-            Reader reader = Files.newBufferedReader(Paths.get("quotes.json"));
-            List<Quote> author = new Gson().fromJson(reader, new TypeToken<List<Quote>>() {
-            }.getType());
-//        List<Quote> authorSaid = new Gson().fromJson(reader, new TypeToken<List<User>>() {}.getType());
-            author.forEach(System.out::println);
+
+            Reader reader = Files.newBufferedReader(Paths.get("src/main/resources/quotes.json"));
+
+            Quote[] quote = gson.fromJson(reader, Quote[].class);
+
+
+            int randomNum = (int)(Math.random() * quote.length);
+            System.out.println(quote[randomNum]);
+
             reader.close();
-        } catch (Exception ex){
+
+            }catch (Exception ex) {
             ex.printStackTrace();
+
         }
-
-        File jsonedFile = new File("src/main/java/resources/jsonedFile.json");
-        jsonedFile.createNewFile();
-        FileWriter jsonedFileWriter = new FileWriter("src/main/java/resources/jsonedFile.json");
-        jsonedFileWriter.close();
-
-//        FileReader barryScan = new FileReader(new File("src/main/resources/quotes.json"));
-//        System.out.println("stuff" + barryScan.ready());
-
-//        Scanner jsonScanner = new Scanner(new File("src/main/resources/quotes.json"));
-//        String allTheJson = jsonScanner.nextLine();
-//        Quote authorSaid = gson.fromJson(allTheJson, Quote.class);
-//        System.out.println(authorSaid);
     }
     class TypeDTO {
         String author;
